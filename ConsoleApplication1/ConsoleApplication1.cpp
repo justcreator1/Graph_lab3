@@ -171,8 +171,10 @@ vector<Point> PV(double radius, double startAngle, Point center) {
 int main()
 {
     double r;
+    cout << "Enter the radius: ";
     cin >> r;
     double c;
+    cout << "Enter the angle: ";
     cin >> c;
     vector<Point> vertices = PV(r, c, { int(r) + 1,int(r) + 1 });
     Canvas1 cda(2 * int(r) + 2, 2 * int(r) + 2);
