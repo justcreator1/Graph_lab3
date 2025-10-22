@@ -55,6 +55,26 @@ public:
         return true;
     }
 
+    bool Save_CanvasP3(const string& filepath)
+    {
+        ofstream stream(filepath, ios::binary);
+        if (!stream) {
+            cout << "не удалось создать файл" << endl;
+            return false;
+        }
+        stream << "P3\n" << width << " " << height << "\n255\n";
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                const RGB& pixel = pixels[i * width + j];
+                stream << static_cast<int>(pixel.r) << " "
+                    << static_cast<int>(pixel.g) << " "
+                    << static_cast<int>(pixel.b);
+                if (j < width - 1) stream << " ";
+            }
+            stream << "\n";
+        }
+    }
+
     void CDA(Point start, Point end,RGB color) 
     {
         double L;
@@ -186,8 +206,8 @@ int main()
         br.Brezenhem(vertices[(i - 1) * 2 % 5], vertices[i * 2 % 5], { 255,0,0 });
         brc.BrezenhemC(vertices[(i - 1) * 2 % 5], vertices[i * 2 % 5], { 255,0,0 });
     }
-    cda.Save_Canvas("cda.ppm");
-    br.Save_Canvas("br.ppm");
-    brc.Save_Canvas("brc.ppm");
+    cda.Save_CanvasP3("cda.ppm");
+    br.Save_CanvasP3("br.ppm");
+    brc.Save_CanvasP3("brc.ppm");
 
 }
